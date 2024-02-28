@@ -720,9 +720,42 @@ const CreateContactForm = (props) => {
             maatschappelijke zetel van de Dienstverlener is gelegen.{" "}
           </p>
         </div>
-      </div>
-      <div className="contract-content-part" id="end">
-        <p></p>
+        <div className="contract-content-part" id="end">
+          <p>
+            Gedaan te {props.data.place} op {props.data.date} in 2 originele
+            exemplaren waarvan elke partij erkent een ondertekend exemplaar te
+            hebben ontvangen.
+          </p>
+          <div className="end-signatures">
+            <div>
+              <p>Voor de Dienstverlener</p>
+              <img src="(HANDTEKENING)" alt="Charles-Arthur's signature" />
+              <p>
+                Charles-Arthur Notterbaert
+                <br />
+                Zaakvoerder
+                <br />
+                OctoSales - Nottebaert Consult BV
+              </p>
+            </div>
+
+            <div>
+              <p>Voor de Opdrachtgever</p>
+              <img src="(HANDTEKENING)" alt="Client's signature" />
+              <p>
+                {props.data.representative.representativeName}
+                <br />
+                {props.data.representative.representativeFunction}
+                <br />
+                {props.data.name}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="lines">
+          <div className="top-line--yellow"></div>
+          <div className="top-line--black" id="bottom-line--black"></div>
+        </div>
       </div>
     </div>
   );

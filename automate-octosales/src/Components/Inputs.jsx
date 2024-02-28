@@ -3,6 +3,13 @@ import React, { useState } from "react";
 import Contract from "../Components/Contract.jsx";
 
 const CreateContactForm = () => {
+  // GET current date (from: https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
+  const date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  const currentDate = `${day}/${month}/${year}`;
+
   const [formData, setFormData] = useState({
     name: "",
     btw: "",
@@ -10,16 +17,29 @@ const CreateContactForm = () => {
     representative: "",
     description: "",
     message: "",
+    place: "Gent",
+    date: currentDate,
   });
 
   const { name, btw, address, representative, description, message } = formData;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevState) => ({
+      ...prevState,
       [name]: value,
-    });
+    }));
+  };
+
+  const handleRepresentativeChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      representative: {
+        ...prevState.representative,
+        [name]: value,
+      },
+    }));
   };
 
   return (
@@ -51,14 +71,21 @@ const CreateContactForm = () => {
           <input
             type="text"
             placeholder="Vertegenwoordiger naam"
-            name="representative"
-            value={representative}
-            onChange={handleChange}
+            name="representativeName"
+            value={representative.name}
+            onChange={handleRepresentativeChange}
+          />
+          <input
+            type="text"
+            placeholder="Vertegenwoordiger functie"
+            name="representativeFunction"
+            value={representative.function}
+            onChange={handleRepresentativeChange}
           />
           <input
             type="text"
             placeholder="Omschrijving takenpakket"
-            name="Omschrijving takenpakket"
+            name="description"
             value={description}
             onChange={handleChange}
           />

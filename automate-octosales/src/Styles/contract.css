@@ -65,3 +65,17 @@ body{
 .part-8-formule--right{
     margin-left: 20px;
 }
+
+.end-signatures{
+    display: flex;
+    justify-content: space-around;
+}
+
+.lines{
+    display: flex;
+    flex-direction: column;
+}
+
+#bottom-line--black{
+    float: right;
+}
