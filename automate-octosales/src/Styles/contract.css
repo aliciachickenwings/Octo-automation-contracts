@@ -1,0 +1,67 @@
+:root {
+    --yellow: #FFE70B;
+    --black: #050608
+  }
+
+body{
+    font-size: 12px;
+}
+
+.top-line--yellow{
+    width: 100%;
+    height: 4px;
+    margin-bottom: 20px;
+    background-color: var(--yellow);
+}
+
+.top-line--black{
+    width: 20%;
+    height: 4px;
+    float: right;
+    background-color: var(--black);
+}
+
+.mainLogo{
+    width: 40%;
+}
+
+.contract-content-part--flex{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.contract-content-part--flex-text{
+    margin-left: 50px;
+}
+
+.contract-content-part--flex-text div{
+    margin-bottom: 20px;
+}
+
+.contract-content-part--flex h3{
+    margin: 0;
+}
+
+.contract-content-part{
+    margin-bottom: 40px;
+}
+
+.part-8-formule{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.part-8-formule--left{
+   text-align: center; 
+}
+.part-8-formule--left-divider{
+    width: 200px;
+    border-bottom: 1px solid black;
+}
+
+.part-8-formule--right{
+    margin-left: 20px;
+}

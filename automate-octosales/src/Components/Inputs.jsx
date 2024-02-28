@@ -8,11 +8,11 @@ const CreateContactForm = () => {
     btw: "",
     address: "",
     representative: "",
-    tasks: "",
+    description: "",
     message: "",
   });
 
-  const { name, btw, address, representative, tasks, message } = formData;
+  const { name, btw, address, representative, description, message } = formData;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,8 +58,8 @@ const CreateContactForm = () => {
           <input
             type="text"
             placeholder="Omschrijving takenpakket"
-            name="tasks"
-            value={tasks}
+            name="Omschrijving takenpakket"
+            value={description}
             onChange={handleChange}
           />
         </div>
