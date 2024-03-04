@@ -1,6 +1,7 @@
 import "../Styles/inputs.css";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Contract from "../Components/Contract.jsx";
+import prices from "../data/prices.json";
 
 const CreateContactForm = () => {
   // GET current date (from: https://www.freecodecamp.org/news/javascript-get-current-date-todays-date-in-js/)
@@ -17,29 +18,49 @@ const CreateContactForm = () => {
     representative: "",
     description: "",
     message: "",
-    place: "Gent",
+    employee: "normal",
+    place: "",
+    pricing: "",
+    payDate: "op",
     date: currentDate,
   });
 
-  const { name, btw, address, representative, description, message } = formData;
+  const [inputValues, setInputValues] = useState({
+    name: "",
+    btw: "",
+    address: "",
+    representative: "",
+    description: "",
+    employee: "normal",
+    payDate: "",
+  });
 
-  const handleChange = (e) => {
+  const handleFieldChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setInputValues({ ...inputValues, [name]: value });
   };
 
-  const handleRepresentativeChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      representative: {
-        ...prevState.representative,
-        [name]: value,
-      },
-    }));
+  const handleUpdate = () => {
+    let selectedPayDate;
+    switch (inputValues.payDate) {
+      case "3m":
+        selectedPayDate = "3 maanden na";
+        break;
+      case "6m":
+        selectedPayDate = "6 maanden na";
+        break;
+      default:
+        selectedPayDate = "op";
+    }
+
+    console.log("the paydate is", selectedPayDate);
+
+    setFormData({
+      ...formData,
+      ...inputValues,
+      payDate: selectedPayDate,
+      pricing: prices[inputValues.employee],
+    });
   };
 
   return (
@@ -51,46 +72,79 @@ const CreateContactForm = () => {
             type="text"
             placeholder="Naam klant"
             name="name"
-            value={name}
-            onChange={handleChange}
+            value={inputValues.name}
+            onChange={handleFieldChange}
           />
           <input
             type="text"
             placeholder="BTW nummer"
             name="btw"
-            value={btw}
-            onChange={handleChange}
+            value={inputValues.btw}
+            onChange={handleFieldChange}
           />
           <input
             type="text"
             placeholder="Maatschappelijke zetel te ADRES KLANT"
             name="address"
-            value={address}
-            onChange={handleChange}
+            value={inputValues.address}
+            onChange={handleFieldChange}
           />
           <input
             type="text"
             placeholder="Vertegenwoordiger naam"
             name="representativeName"
-            value={representative.name}
-            onChange={handleRepresentativeChange}
+            value={inputValues.representative.name}
+            onChange={handleFieldChange}
           />
           <input
             type="text"
             placeholder="Vertegenwoordiger functie"
             name="representativeFunction"
-            value={representative.function}
-            onChange={handleRepresentativeChange}
+            value={inputValues.representative.function}
+            onChange={handleFieldChange}
           />
           <input
             type="text"
             placeholder="Omschrijving takenpakket"
             name="description"
-            value={description}
-            onChange={handleChange}
+            value={inputValues.description}
+            onChange={handleFieldChange}
           />
+
+          <label>
+            Type
+            <select
+              name="employee"
+              onChange={handleFieldChange}
+              value={inputValues.employee}
+            >
+              <option value="normal">Young Talent</option>
+              <option value="advanced">Advanced Young Talent</option>
+              <option value="technical">Technical Young Talent</option>
+              <option value="normal">Young Graduate</option>
+              <option value="advanced">Advanced Young Graduate</option>
+              <option value="technical">Technical Young Graduate</option>
+              <option value="normal">Young Professional</option>
+              <option value="advanced">Advanced Young Professional</option>
+              <option value="technical">Technical Young Professional</option>
+            </select>
+          </label>
+          <label>
+            Betaling 50% van fee
+            <select
+              name="payDate"
+              onChange={handleFieldChange}
+              value={inputValues.payDate}
+            >
+              <option value="start">
+                op het ogenblik van effectieve opstart
+              </option>
+              <option value="3m">3 maanden na effectieve opstart</option>
+              <option value="6m">6 maanden na effectieve opstart</option>
+            </select>
+          </label>
         </div>
-        {message && <p className="message">{message}</p>}
+        <button onClick={handleUpdate}>Update gegevens</button>
       </div>
       <div className="contract-text-container">
         <Contract data={formData} />

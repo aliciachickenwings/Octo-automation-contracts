@@ -1,5 +1,7 @@
 import "../Styles/contract.css";
 import React, { useRef } from "react";
+import octoLogo from "../assets/OctoZwart.png";
+import HtArthur from "../assets/HtArthur.png";
 import jsPDF from "jspdf";
 import html2pdf from "html2pdf.js";
 
@@ -8,25 +10,42 @@ const CreateContactForm = (props) => {
   const contract = useRef();
 
   const handleContract = () => {
-    var opt = {
-      filename: `${props.data.name}.pdf`,
+    const opt = {
       margin: 0.5,
+      pagebreak: { mode: "avoid-all", before: "#page2el" },
+      filename: `${props.data.name}.pdf`,
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      image: { type: "jpeg", quality: 1 },
     };
 
-    // Select the element containing the HTML you want to convert
     const element = contract.current;
 
-    // Use html2pdf to convert the HTML content to a PDF
-    html2pdf().from(element).set(opt).save();
+    const pages = element.querySelectorAll(".contract-content-container");
+    console.log("THESE ARE PAGES", pages);
 
-    //yt video aanpak
-    /*     const input = contract.current;
+    const pdf = html2pdf();
+    console.log(pdf);
+    pdf.from(element).set(opt).save();
+
+    /*     pages.forEach((page, index) => {
+      console.log("THIS IS A PAGE");
+      const pageNumber = document.createElement("div");
+      
+      console.log("PageNumber", pageNumber);
+
+      pageNumber.className = "page-number";
+      pageNumber.textContent = `Page ${index + 1}`;
+
+      page.appendChild(pageNumber);
+    }); */
+  };
+
+  //yt video aanpak
+  /*     const input = contract.current;
     html2canvas(input).then((canvas)=>{
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm')
     }) */
-  };
 
   return (
     <div className="contract-form-wrapper">
@@ -38,33 +57,35 @@ const CreateContactForm = (props) => {
           <div className="octo-logo">
             <img
               className="main-logo"
-              src="../../public/images/OctoZwart.png"
+              src={octoLogo}
               alt="Zwarte OctoSales Logo"
             />
           </div>
+          <h2>DIENSTVERLENINGSOVEREENKOMST</h2>
+          <br />
         </div>
+
         <div className="contract-content-part--flex">
           <h3 className="contract-content-part--flex-title">Tussen:</h3>
           <div className="contract-content-part--flex-text">
             <div>
               <h3>OctoSales (Nottebaert consult bv),</h3>
-              <p />
+              <br />
               KBO BTW 0779.812.001, met maatschappelijke zetel te Tivolistraat
               127, 9700 Oudenaarde, rechtsgeldig vertegenwoordigd door
-              Charles-Arthur Nottebaert , in zijn hoedanigheid van zaakvoerder;
-              <p />
+              Charles-Arthur Nottebaert , in zijn hoedanigheid van zaakvoerder.
+              <br />
               Hierna verkort “de Dienstverlener”
             </div>
             <div>
               <h3>En: {props.data.name},</h3>
-              <p />
-              KBO BTW {props.data.btw}, met maatschappelijke zetel te
-              Tivolistraat 127, 9700 Oudenaarde, rechtsgeldig vertegenwoordigd
-              door Charles-Arthur Nottebaert , in zijn hoedanigheid van
-              zaakvoerder;
-              <p />
+              <br />
+              KBO BTW{props.data.btw}, met maatschappelijke zetel te{" "}
+              {props.data.address}, rechtsgeldig vertegenwoordigd door{" "}
+              {props.data.representativeName}, hiertoe behoorlijk gevolmachtigd.
+              <br />
               Hierna verkort “de opdrachtgever”
-              <p />
+              <br />
               De Dienstverlener en de opdrachtgever worden hierna individueel
               een “partij” en gezamenlijk de “partijen” genoemd.
             </div>
@@ -72,44 +93,46 @@ const CreateContactForm = (props) => {
         </div>
         <div className="contract-content-part">
           <h3>Wordt voorafgaandelijk het volgende uiteengezet: </h3>
-          <p />
-          In het kader van het realiseren van verschillende van zijn projecten,
-          wenst de opdrachtgever een beroep te doen op de gespecialiseerde
-          dienstverlening van de Dienstverlener, gelet op de specifieke knowhow,
-          capaciteit en geschoolde uitvoerders van deze Dienstverlener. Partijen
-          wensen hun wederzijdse rechten en verplichtingen vast te leggen in het
-          kader van deze dienstverlening. Met deze overeenkomst wensen partijen
-          een kader te creëren voor een professionele samenwerking.
+          <p>
+            In het kader van het realiseren van verschillende van zijn
+            projecten, wenst de opdrachtgever een beroep te doen op de
+            gespecialiseerde dienstverlening van de Dienstverlener, gelet op de
+            specifieke knowhow, capaciteit en geschoolde uitvoerders van deze
+            Dienstverlener. Partijen wensen hun wederzijdse rechten en
+            verplichtingen vast te leggen in het kader van deze dienstverlening.
+            Met deze overeenkomst wensen partijen een kader te creëren voor een
+            professionele samenwerking.
+          </p>
         </div>
 
         <div className="contract-content-part" id="part-1">
           <h3>Wordt overeengekomen en aanvaard wat volgt:</h3>
-          <h3>1. Voorwerp</h3>
-          <p />
 
-          <p>
-            De opdrachtgever doet beroep op de Dienstverlener voor externe
-            ondersteuning bij onder meer:
-            <p />
-            {props.data.description}
-            <p />
-            Indien tijdens de uitvoering van deze overeenkomst blijkt dat de
-            opdracht moet worden gewijzigd of uitgebreid, hetzij op vraag van de
-            opdrachtgever, hetzij op grond van bijkomende inlichtingen die door
-            de Dienstverlener werden verkregen, hetzij om te kunnen rekening
-            houden met de meest recente technieken, hetzij voor om het even
-            welke andere reden, verplicht de Dienstverlener er zich toe de
-            opdrachtgever onmiddellijk in te lichten over de weerslag die deze
-            omstandigheden zullen hebben op de wijziging van deze overeenkomst,
-            de technische realisatie van de opdracht, de uitvoeringstermijnen en
-            de prijs. Deze wijzigingen zullen het voorwerp uitmaken van een
-            bijlage bij voorliggende overeenkomst, ondertekend door beide
-            partijen.
-          </p>
+          <h3>1. Voorwerp</h3>
+          <div>
+            <p>
+              De opdrachtgever doet beroep op de Dienstverlener voor externe
+              ondersteuning bij onder meer:
+            </p>
+            <p>{props.data.description}</p>
+            <p>
+              Indien tijdens de uitvoering van deze overeenkomst blijkt dat de
+              opdracht moet worden gewijzigd of uitgebreid, hetzij op vraag van
+              de opdrachtgever, hetzij op grond van bijkomende inlichtingen die
+              door de Dienstverlener werden verkregen, hetzij om te kunnen
+              rekening houden met de meest recente technieken, hetzij voor om
+              het even welke andere reden, verplicht de Dienstverlener er zich
+              toe de opdrachtgever onmiddellijk in te lichten over de weerslag
+              die deze omstandigheden zullen hebben op de wijziging van deze
+              overeenkomst, de technische realisatie van de opdracht, de
+              uitvoeringstermijnen en de prijs. Deze wijzigingen zullen het
+              voorwerp uitmaken van een bijlage bij voorliggende overeenkomst,
+              ondertekend door beide partijen.
+            </p>
+          </div>
         </div>
         <div className="contract-content-part" id="part-2">
           <h3>2. Aanvang en duur</h3>
-          <p />
           <p>
             2.1 Deze overeenkomst wordt aangegaan voor onbepaalde duur en vangt
             aan op moment van ondertekening van onderhavige overeenkomst.
@@ -133,7 +156,7 @@ const CreateContactForm = (props) => {
             ervan definitief onmogelijk is geworden door overmacht. De meest
             gerede partij moet de andere partij binnen de 7 dagen schriftelijk
             verwittigen van de ontstane
-            <p />
+            <br />
             overmacht.
           </p>
           <p>
@@ -161,11 +184,13 @@ const CreateContactForm = (props) => {
             Dienstverlener één week in de onmogelijkheid verkeert haar taken uit
             te oefenen, totdat laatstgenoemde deze taken hervat.
           </p>
-          <p>
-            Onderhavige overeenkomst wordt met onmiddellijke ingang en zonder
-            enige vergoeding beëindigd in geval van zware fout. Onder zware fout
-            wordt onder andere verstaan: -een aangetoonde inbreuk op de
-            vertrouwelijkheidsclausule (confidentialiteit); <p />
+          <div>
+            <p>
+              Onderhavige overeenkomst wordt met onmiddellijke ingang en zonder
+              enige vergoeding beëindigd in geval van zware fout. Onder zware
+              fout wordt onder andere verstaan: -een aangetoonde inbreuk op de
+              vertrouwelijkheidsclausule (confidentialiteit);{" "}
+            </p>
             <ul>
               <li>
                 het onachtzaam omspringen met materialen van de opdrachtgever of
@@ -185,7 +210,7 @@ const CreateContactForm = (props) => {
               </li>
               <li>deze opsomming is niet limitatief.</li>
             </ul>
-          </p>
+          </div>
           <p>
             Het verrichte werk wordt geacht definitief aanvaard te zijn door de
             opdrachtgever bij gebrek aan enig protest door aangetekend schrijven
@@ -223,7 +248,7 @@ const CreateContactForm = (props) => {
               vergetelheden van de opdrachtgever in de hem toevertrouwde
               opdracht, noch voor vergissingen, fouten of vergetelheden in de
               uitvoering bewerkstelligd door de opdrachtgever of door een derde.
-              <p />
+              <br />
             </div>
             <div>
               <strong>2</strong> <br /> De Dienstverlener verbindt zich ertoe om
@@ -234,7 +259,7 @@ const CreateContactForm = (props) => {
               werkzaamheden met betrekking tot de verschillende opdrachten
               uitvoeren naar beste kennis en vermogen, rekening houdend met de
               toepasselijke reglementen en voorschriften.
-              <p />
+              <br />
             </div>
             <div>
               <strong>3</strong> <br /> De Dienstverlener is gevrijwaard van
@@ -251,7 +276,7 @@ const CreateContactForm = (props) => {
               <strong>
                 De prestaties worden wekelijks aan de Opdrachtgever gefactureerd
               </strong>
-              <p />
+              <br />
             </div>
             <div>
               <strong>4</strong> <br /> De Dienstverlener verklaart alle
@@ -268,7 +293,7 @@ const CreateContactForm = (props) => {
               ook, of op eenvoudig verzoek van de opdrachtgever tijdens de
               overeenkomst, zal de Dienstverlener alle vertrouwelijke informatie
               onmiddellijk overmaken aan de opdrachtgever.
-              <p />
+              <br />
             </div>
           </div>
           <div>
@@ -287,7 +312,7 @@ const CreateContactForm = (props) => {
                 <li>gelijke behandeling;</li>
                 <li>veiligheid, gezondheid en hygiëne op het werk;</li>
               </ul>
-              <p />
+              <br />
             </div>
             <div>
               <strong>2</strong> <br /> De Dienstverlener zal de goede
@@ -299,7 +324,7 @@ const CreateContactForm = (props) => {
               hoogte brengen, zodat deze laatste de nodige maatregelen kan
               nemen, inclusief het aan een derde toevertrouwen van de betrokken
               opdrachten.
-              <p />
+              <br />
             </div>
             <div>
               <strong>3</strong> <br /> De autoriteit en verantwoordelijkheid
@@ -327,7 +352,7 @@ const CreateContactForm = (props) => {
                 over het personeel (uitvoerders-werknemers) wordt uitgevoerd
                 onder de eigen verantwoordelijkheid van de Dienstverlener.
               </p>
-              <p />
+              <br />
             </div>
           </div>
           <div>
@@ -357,7 +382,7 @@ const CreateContactForm = (props) => {
             <strong>5.2</strong> De opdrachtgever is ertoe gehouden de
             uitvoerders in te lichten over de mogelijke risico’s verbonden aan
             de opdracht.
-            <p />
+            <br />
             De Dienstverlener zal voor het uitvoeren van de opdracht enkel goed
             geïnstrueerd en opgeleide uitvoerders inzetten, onder de voorwaarden
             van deze overeenkomst.
@@ -381,20 +406,25 @@ const CreateContactForm = (props) => {
             forfaitaire schadevergoeding verschuldigd van 8.500 EUR.
           </p>
           <p>
-            <strong>6.2</strong>De opdrachtgever en aanverwante bedrijven kunnen
-            een student van de Dienstverlener volledig overnemen voor een flat
-            fee van (STUDENT_FEE) EUR. De student kan aan de fee van
-            (STUDENT_FEE) euro overgenomen worden ten laatste 12 maanden voor
-            het afstuderen. De overname zal uitdrukkelijk bevestigd worden door
-            de Dienstverlener via mail of aangetekend schrijven.
+            <strong>6.2</strong> De opdrachtgever en aanverwante bedrijven
+            kunnen een student van de Dienstverlener volledig overnemen voor een
+            flat fee van{" "}
+            {props.data.pricing.fee ? props.data.pricing.fee : 4500} EUR. De
+            student kan aan de fee van
+            {props.data.pricing.fee ? props.data.pricing.fee : 4500} euro
+            overgenomen worden ten laatste 12 maanden voor het afstuderen. De
+            overname zal uitdrukkelijk bevestigd worden door de Dienstverlener
+            via mail of aangetekend schrijven.
           </p>
           <p>
             <strong>6.3</strong> Indien de overname of de tewerkstelling gaat
             over een stage dan kan de opdrachtgever en aanverwante bedrijven een
             student van de Dienstverlener volledig overnemen of tewerkstellen
-            voor een flat van (STUDENT_FEE) per uitvoerder, personeelslid of
-            aangestelde. De overname zal uitdrukkelijk bevestigd worden door de
-            Dienstverlener via mail of aangetekend schrijven.
+            voor een flat van{" "}
+            {props.data.pricing.internship ? props.data.internship : 3500}
+            per uitvoerder, personeelslid of aangestelde. De overname zal
+            uitdrukkelijk bevestigd worden door de Dienstverlener via mail of
+            aangetekend schrijven.
           </p>
           <p>
             <strong>6.4</strong> De opdrachtgever en aanverwante bedrijven
@@ -403,10 +433,10 @@ const CreateContactForm = (props) => {
             (STUDENT_FEE). De overname zal uitdrukkelijk bevestigd worden door
             de Dienstverlener via mail of aangetekend schrijven.
           </p>
-          <p>
+          <div>
             <strong>6.5</strong> De opdrachtgever en aanverwante bedrijven
             kunnen een Young Professional bediende of freelancer van de
-            Dienstverlener volledig overnemen voor een procentuele fee van het
+            Dienstverlener volledig overnemen voor een % fee van het
             brutojaarloon, inclusief vakantiegeld, van het aangeworven profiel.
             Dit is voor:
             <ul>
@@ -414,9 +444,11 @@ const CreateContactForm = (props) => {
               <li>Advanced Young Professional: 24%</li>
               <li>Technical Young Professional: 25%</li>
             </ul>
-            De overname zal uitdrukkelijk bevestigd worden door de
-            Dienstverlener via mail of aangetekend schrijven.
-          </p>
+            <p>
+              De overname zal uitdrukkelijk bevestigd worden door de
+              Dienstverlener via mail of aangetekend schrijven.
+            </p>
+          </div>
           <p>
             <strong>6.6</strong> OctoSales werkt volledig volgens het no cure no
             pay principe. Er wordt dus geen opstartkost aangerekend. De fee is
@@ -425,11 +457,11 @@ const CreateContactForm = (props) => {
             kandidaat is voorgesteld maar de bedrijf die niet aanvaardt. Fees
             worden in twee schijven gefactureerd: 50% van de fee wordt
             gefactureerd op het moment van contractondertekening tussen
-            kandidaat en werkgever. De andere 50% wordt gefactureerd op het
-            ogenblik van effectieve opstart van de samenwerking tussen klant en
-            kandidaat.
+            kandidaat en werkgever. De andere 50% wordt gefactureerd{" "}
+            {props.data.payDate} het ogenblik van effectieve opstart van de
+            samenwerking tussen klant en kandidaat.
           </p>
-          <p>
+          <div>
             <strong>6.7</strong>De klant kan ook een student, bediende of
             freelancer aanwerven nadat die door OctoSales werd gedetacheerd naar
             de klant. Daarvoor gelden volgende principes.
@@ -449,7 +481,7 @@ const CreateContactForm = (props) => {
               gepresteerde uren. Als basis voor studenten wordt 900 uren
               gehanteerd en voor bedienden en freelancers 20 volledige dagen.
             </p>
-          </p>
+          </div>
         </div>
         <div className="contract-content-part" id="part-7">
           <h3>7. Aansprakelijkheid</h3>
@@ -499,12 +531,12 @@ const CreateContactForm = (props) => {
             Dienstverlener dient te dragen ten gevolge van de
             aannemingsopdrachten.
           </p>
-          <p>
-            <strong>
-              Het honorarium bedraagt 28,70 EUR(STUDENT_FEE_?) ex. BTW behoudens
-              andere bepalingen opgenomen in onderhavige overeenkomst.
-            </strong>
-          </p>
+
+          <strong>
+            Het honorarium bedraagt {props.data.pricing.hourlyPay} ex. BTW
+            behoudens andere bepalingen opgenomen in onderhavige overeenkomst.
+          </strong>
+
           <p>
             De bovenvermelde vergoeding omvat alle kosten zoals
             werkgeversbijdragen aan de RSZ, vakantiegeld, wetsverzekering voor
@@ -518,7 +550,7 @@ const CreateContactForm = (props) => {
             ook voorgelegd worden ter goedkeuring aan de opdrachtgever.
           </p>
 
-          <p>
+          <div>
             Volgende coëfficiënten zijn van toepassing voor kosten die niet
             inbegrepen zijn in de vergoeding:
             <ul>
@@ -531,7 +563,7 @@ const CreateContactForm = (props) => {
               <li>Andere sociale voordelen: 1,25</li>
               <li>Nettopremies: 1,25</li>
             </ul>
-          </p>
+          </div>
           <p>
             De eventuele onkosten (voor verplaatsingen, maaltijden, hotel,
             enz...) van meer dan 50 EUR per dag, gemaakt in de loop van de
@@ -575,11 +607,14 @@ const CreateContactForm = (props) => {
             inwerkingtreding van de dienstverleningsovereenkomst of de
             voorlaatste decembermaand voor de . Indien de uitvoerder een student
             betreft die zijn wettelijk contingent van 600 uren op jaarbasis
-            overschrijdt zal het honorarium verhoogd worden naar 35,50 EUR per
-            uur (ex. BTW) voor de uren die het contingent overschrijden in dat
-            jaar. Deze vermeerdering is van toepassing doordat de student vanaf
-            uur 601 onderhevig is aan de normale wettelijke verplichtingen van
-            een bediende. Vanaf de student over minder dan 100 uur beschikt
+            overschrijdt zal het honorarium verhoogd worden naar{" "}
+            {props.data.pricing.hourlyPayWorkStudent
+              ? props.data.pricing.hourlyPayWorkStudent
+              : 35.5}
+            EUR per uur (ex. BTW) voor de uren die het contingent overschrijden
+            in dat jaar. Deze vermeerdering is van toepassing doordat de student
+            vanaf uur 601 onderhevig is aan de normale wettelijke verplichtingen
+            van een bediende. Vanaf de student over minder dan 100 uur beschikt
             wordt de klant direct op de hoogte gebracht.
           </p>
           <p>
@@ -729,7 +764,11 @@ const CreateContactForm = (props) => {
           <div className="end-signatures">
             <div>
               <p>Voor de Dienstverlener</p>
-              <img src="(HANDTEKENING)" alt="Charles-Arthur's signature" />
+              <img
+                src={HtArthur}
+                alt="Charles-Arthur's signature"
+                className="signature"
+              />
               <p>
                 Charles-Arthur Notterbaert
                 <br />
@@ -742,13 +781,15 @@ const CreateContactForm = (props) => {
             <div>
               <p>Voor de Opdrachtgever</p>
               <img src="(HANDTEKENING)" alt="Client's signature" />
-              <p>
-                {props.data.representative.representativeName}
-                <br />
-                {props.data.representative.representativeFunction}
-                <br />
-                {props.data.name}
-              </p>
+              <div>
+                <p>
+                  {props.data.representativeName}
+                  <br />
+                  {props.data.representativeFunction}
+                  <br />
+                  {props.data.name}
+                </p>
+              </div>
             </div>
           </div>
         </div>

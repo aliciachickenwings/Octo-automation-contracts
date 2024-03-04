@@ -1,0 +1,28 @@
+{
+    "normal":{
+        "hourlyPay":28.70,
+        "hourlyPayWorkStudent":31.20,
+        "werkstudent": 285.60,
+        "internship": 3500,
+        "fee": 4500,
+        "ygFee":7000
+    },
+    "advanced":{
+        "hourlyPay":32.20,
+        "hourlyPayWorkStudent":35.70,
+        "werkstudent": 313.6,
+        "internship": 4250,
+        "fee": 5250,
+        "ygFee":8000
+    },
+    "technical":{
+        "hourlyPay":35.20,
+        "hourlyPayWorkStudent":42.20,
+        "werkstudent": 337.6,
+        "internship": 5000,
+        "fee": 6000,
+        "ygFee":9000
+    }  
+
+  }
+  

@@ -21,8 +21,9 @@ body{
     background-color: var(--black);
 }
 
-.mainLogo{
-    width: 40%;
+.main-logo{
+    width: 36%;
+    margin: 5em 0 5em 0;
 }
 
 .contract-content-part--flex{
@@ -68,8 +69,15 @@ body{
 
 .end-signatures{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+
+    margin: 0px 50px 0px 50px;
 }
+
+/* .end-signatures div{
+    align-items: center;
+} */
+
 
 .lines{
     display: flex;
@@ -78,4 +86,8 @@ body{
 
 #bottom-line--black{
     float: right;
+}
+
+.signature{
+    width: 50%;
 }
