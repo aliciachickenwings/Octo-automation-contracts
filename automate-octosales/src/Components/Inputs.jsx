@@ -11,6 +11,8 @@ const CreateContactForm = () => {
   let year = date.getFullYear();
   const currentDate = `${day}/${month}/${year}`;
 
+  const [errorMessage, setErrorData] = useState();
+
   const [formData, setFormData] = useState({
     name: "",
     btw: "",
@@ -20,9 +22,10 @@ const CreateContactForm = () => {
     message: "",
     employee: "normal",
     place: "",
-    pricing: "",
+    pricing: "normal",
     payDate: "op",
     date: currentDate,
+    generatePDF: false,
   });
 
   const [inputValues, setInputValues] = useState({
@@ -41,110 +44,148 @@ const CreateContactForm = () => {
   };
 
   const handleUpdate = () => {
-    let selectedPayDate;
-    switch (inputValues.payDate) {
-      case "3m":
-        selectedPayDate = "3 maanden na";
-        break;
-      case "6m":
-        selectedPayDate = "6 maanden na";
-        break;
-      default:
-        selectedPayDate = "op";
+    if (
+      inputValues.name.trim() === "" ||
+      inputValues.btw.trim() === "" ||
+      inputValues.address.trim() === "" ||
+      inputValues.representativeName.trim() === "" ||
+      inputValues.representativeFunction.trim() === "" ||
+      inputValues.description.trim() === ""
+    ) {
+      setErrorData("Een of meerder velden zijn leeg");
+      setFormData((prevData) => ({
+        ...prevData,
+        ...inputValues,
+        generatePDF: false,
+      }));
+      return;
+    } else {
+      let selectedPayDate;
+      console.log("pricing:", inputValues.employee);
+      switch (inputValues.payDate) {
+        case "3m":
+          selectedPayDate = "3 maanden na";
+          break;
+        case "6m":
+          selectedPayDate = "6 maanden na";
+          break;
+        default:
+          selectedPayDate = "op";
+      }
+      console.log("the paydate is", selectedPayDate);
+
+      setFormData((prevData) => ({
+        ...prevData,
+        ...inputValues,
+        payDate: selectedPayDate,
+        pricing: prices[inputValues.employee],
+        generatePDF: true,
+      }));
+
+      console.log("SELECTED EMPLOYEE", formData.pricing); // This may not reflect the updated value
+      setErrorData("");
     }
-
-    console.log("the paydate is", selectedPayDate);
-
-    setFormData({
-      ...formData,
-      ...inputValues,
-      payDate: selectedPayDate,
-      pricing: prices[inputValues.employee],
-    });
   };
 
   return (
     <div className="contract-wrapper">
-      <h3>New contract</h3>
       <div className="contract-form-container">
         <div className="contract-form-input-fields">
+          <h2>New contract</h2>
           <input
             type="text"
+            className="input--full"
             placeholder="Naam klant"
             name="name"
             value={inputValues.name}
             onChange={handleFieldChange}
           />
-          <input
+          <div>
+            <input
+              type="text"
+              className="input"
+              placeholder="BTW nummer"
+              name="btw"
+              value={inputValues.btw}
+              onChange={handleFieldChange}
+            />
+            <input
+              type="text"
+              className="input"
+              placeholder="Maatschappelijke zetel te ADRES KLANT"
+              name="address"
+              value={inputValues.address}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              className="input"
+              placeholder="Vertegenwoordiger naam"
+              name="representativeName"
+              value={inputValues.representative.name}
+              onChange={handleFieldChange}
+            />
+
+            <input
+              type="text"
+              className="input"
+              placeholder="Vertegenwoordiger functie"
+              name="representativeFunction"
+              value={inputValues.representative.function}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <textarea
             type="text"
-            placeholder="BTW nummer"
-            name="btw"
-            value={inputValues.btw}
-            onChange={handleFieldChange}
-          />
-          <input
-            type="text"
-            placeholder="Maatschappelijke zetel te ADRES KLANT"
-            name="address"
-            value={inputValues.address}
-            onChange={handleFieldChange}
-          />
-          <input
-            type="text"
-            placeholder="Vertegenwoordiger naam"
-            name="representativeName"
-            value={inputValues.representative.name}
-            onChange={handleFieldChange}
-          />
-          <input
-            type="text"
-            placeholder="Vertegenwoordiger functie"
-            name="representativeFunction"
-            value={inputValues.representative.function}
-            onChange={handleFieldChange}
-          />
-          <input
-            type="text"
+            className="input--big input--full"
             placeholder="Omschrijving takenpakket"
             name="description"
             value={inputValues.description}
             onChange={handleFieldChange}
-          />
-
-          <label>
-            Type
-            <select
-              name="employee"
-              onChange={handleFieldChange}
-              value={inputValues.employee}
-            >
-              <option value="normal">Young Talent</option>
-              <option value="advanced">Advanced Young Talent</option>
-              <option value="technical">Technical Young Talent</option>
-              <option value="normal">Young Graduate</option>
-              <option value="advanced">Advanced Young Graduate</option>
-              <option value="technical">Technical Young Graduate</option>
-              <option value="normal">Young Professional</option>
-              <option value="advanced">Advanced Young Professional</option>
-              <option value="technical">Technical Young Professional</option>
-            </select>
-          </label>
-          <label>
-            Betaling 50% van fee
-            <select
-              name="payDate"
-              onChange={handleFieldChange}
-              value={inputValues.payDate}
-            >
-              <option value="start">
-                op het ogenblik van effectieve opstart
-              </option>
-              <option value="3m">3 maanden na effectieve opstart</option>
-              <option value="6m">6 maanden na effectieve opstart</option>
-            </select>
-          </label>
+          ></textarea>
+          <div className="select-wrapper">
+            <div>
+              <label>Type</label>
+              <select
+                name="employee"
+                className="input"
+                onChange={handleFieldChange}
+                value={inputValues.employee}
+              >
+                <option value="normal">Young Talent</option>
+                <option value="advanced">Advanced Young Talent</option>
+                <option value="technical">Technical Young Talent</option>
+                <option value="normal">Young Graduate</option>
+                <option value="advanced">Advanced Young Graduate</option>
+                <option value="technical">Technical Young Graduate</option>
+                <option value="normal">Young Professional</option>
+                <option value="advanced">Advanced Young Professional</option>
+                <option value="technical">Technical Young Professional</option>
+              </select>
+            </div>
+            <div>
+              <label>Betaling 50% van fee</label>
+              <select
+                name="payDate"
+                className="input"
+                onChange={handleFieldChange}
+                value={inputValues.payDate}
+              >
+                <option value="start">
+                  op het ogenblik van effectieve opstart
+                </option>
+                <option value="3m">3 maanden na effectieve opstart</option>
+                <option value="6m">6 maanden na effectieve opstart</option>
+              </select>
+            </div>
+          </div>
+          <p className="error">{errorMessage}</p>
+          <button onClick={handleUpdate} className="button">
+            Update gegevens
+          </button>
         </div>
-        <button onClick={handleUpdate}>Update gegevens</button>
       </div>
       <div className="contract-text-container">
         <Contract data={formData} />

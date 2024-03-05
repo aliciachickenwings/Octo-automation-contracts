@@ -7,6 +7,19 @@ body{
     font-size: 12px;
 }
 
+.generate-pdf-wrapper{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.generate-pdf{
+    display: block;
+}
+
+.no-pdf{
+    display: none;
+}
 .top-line--yellow{
     width: 100%;
     height: 4px;

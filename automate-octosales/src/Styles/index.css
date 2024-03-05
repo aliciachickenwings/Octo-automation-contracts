@@ -18,8 +18,36 @@ code {
     monospace;
 }
 
-input{
+input, select, button, textarea{
+  border-radius: 1.5em;
+  font-family: 'Poppins', sans-serif;
+}
+
+input:focus{
+  outline: none;
+  border: 2px solid black;
+}
+
+textarea:focus{
+  outline: none;
+  border: 2px solid black;
+}
+
+.button{
+
+  padding: 10px 15px;
+  outline: none;
   border-radius: 2em;
+  background-color: #FFE70B;
+  border: 1px solid #FFE70B;
+
+}
+
+.button:hover{
+  cursor: pointer;
+  background-color: black;
+  border: 1px solid black;
+  color: white;
 }
 
 .underline{
