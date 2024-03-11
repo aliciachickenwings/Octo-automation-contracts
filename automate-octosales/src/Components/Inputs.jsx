@@ -17,11 +17,10 @@ const CreateContactForm = () => {
     name: "",
     btw: "",
     address: "",
-    representative: "",
+    representativeName: "",
+    representativeFunction: "",
     description: "",
-    message: "",
     employee: "normal",
-    place: "",
     pricing: "normal",
     payDate: "op",
     date: currentDate,
@@ -32,7 +31,8 @@ const CreateContactForm = () => {
     name: "",
     btw: "",
     address: "",
-    representative: "",
+    representativeName: "",
+    representativeFunction: "",
     description: "",
     employee: "normal",
     payDate: "",
@@ -124,7 +124,7 @@ const CreateContactForm = () => {
               className="input"
               placeholder="Vertegenwoordiger naam"
               name="representativeName"
-              value={inputValues.representative.name}
+              value={inputValues.representativeName}
               onChange={handleFieldChange}
             />
 
@@ -133,7 +133,7 @@ const CreateContactForm = () => {
               className="input"
               placeholder="Vertegenwoordiger functie"
               name="representativeFunction"
-              value={inputValues.representative.function}
+              value={inputValues.representativeFunction}
               onChange={handleFieldChange}
             />
           </div>

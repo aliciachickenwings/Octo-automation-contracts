@@ -11,6 +11,29 @@ const CreateContactForm = (props) => {
   const contract = useRef();
 
   const handleContract = () => {
+    /* let jsPdf = new jsPDF("p", "pt", "letter");
+    var htmlElement = document.getElementById("contract-content-container");
+    // you need to load html2canvas (and dompurify if you pass a string to html)
+    const opt = {
+      callback: function (jsPdf) {
+        jsPdf.save("Test.pdf");
+        // to open the generated PDF in browser window
+        // window.open(jsPdf.output('bloburl'));
+      },
+      margin: [30, 30, 30, 30],
+      autoPaging: "text",
+      html2canvas: {
+        allowTaint: true,
+        dpi: 300,
+        letterRendering: true,
+        logging: false,
+        scale: 0.7,
+      },
+    };
+
+    
+    jsPdf.html(htmlElement, opt); */
+
     //CHATGPT
     /*     console.log(props.data);
     const pages = Array.from(
@@ -100,8 +123,11 @@ const CreateContactForm = (props) => {
           Generate PDF
         </button>
       </div>
-      <div ref={contract}>
-        <div className="contract-content-container">
+      <div ref={contract} className="contract-content-wrapper">
+        <div
+          className="contract-content-container"
+          id="contract-content-container"
+        >
           <div>
             <div className="top-line--yellow"></div>
             <div className="top-line--black"></div>
@@ -132,7 +158,7 @@ const CreateContactForm = (props) => {
               <div>
                 <h3>En: {props.data.name},</h3>
                 <br />
-                KBO BTW{props.data.btw}, met maatschappelijke zetel te{" "}
+                KBO BTW {props.data.btw}, met maatschappelijke zetel te{" "}
                 {props.data.address}, rechtsgeldig vertegenwoordigd door{" "}
                 {props.data.representativeName}, hiertoe behoorlijk
                 gevolmachtigd.
@@ -470,7 +496,7 @@ const CreateContactForm = (props) => {
               kunnen een student van de Dienstverlener volledig overnemen voor
               een flat fee van{" "}
               {props.data.pricing.fee ? props.data.pricing.fee : 4500} EUR. De
-              student kan aan de fee van
+              student kan aan de fee van{" "}
               {props.data.pricing.fee ? props.data.pricing.fee : 4500} euro
               overgenomen worden ten laatste 12 maanden voor het afstuderen. De
               overname zal uitdrukkelijk bevestigd worden door de Dienstverlener
@@ -489,9 +515,10 @@ const CreateContactForm = (props) => {
             <p>
               <strong>6.4</strong> De opdrachtgever en aanverwante bedrijven
               kunnen een Young Graduate bediende of freelancer van de
-              Dienstverlener volledig overnemen voor een flat fee van
-              (STUDENT_FEE). De overname zal uitdrukkelijk bevestigd worden door
-              de Dienstverlener via mail of aangetekend schrijven.
+              Dienstverlener volledig overnemen voor een flat fee van{" "}
+              {props.data.pricing.ygFee ? props.data.pricing.ygFee : 7000}. De
+              overname zal uitdrukkelijk bevestigd worden door de Dienstverlener
+              via mail of aangetekend schrijven.
             </p>
             <div>
               <strong>6.5</strong> De opdrachtgever en aanverwante bedrijven
@@ -848,7 +875,9 @@ const CreateContactForm = (props) => {
 
               <div>
                 <p>Voor de Opdrachtgever</p>
-                <img src="(HANDTEKENING)" alt="Client's signature" />
+                <div className="client-signature">
+                  <img src="(HANDTEKENING)" alt="Client's signature" />
+                </div>
                 <div>
                   <p>
                     {props.data.representativeName}

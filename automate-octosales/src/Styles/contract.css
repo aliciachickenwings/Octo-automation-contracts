@@ -17,6 +17,20 @@ body{
     display: block;
 }
 
+.forms-container{
+    display: flex;
+    justify-content: center;
+}
+.contract-content-wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.contract-content-container{
+    width: 100%;
+}
+
 .no-pdf{
     display: none;
 }
@@ -103,4 +117,9 @@ body{
 
 .signature{
     width: 50%;
+}
+
+.client-signature{
+   width: 50%;
+   height: 190px;
 }
