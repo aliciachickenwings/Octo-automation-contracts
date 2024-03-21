@@ -1,5 +1,6 @@
 # Getting Started with Create React App
 
+This is a simple React App made for OctoSales to create contracts in an easy way, using inputs.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
