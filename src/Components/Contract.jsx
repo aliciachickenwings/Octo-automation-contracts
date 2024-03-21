@@ -852,9 +852,9 @@ const CreateContactForm = (props) => {
           </div>
           <div className="contract-content-part" id="end">
             <p>
-              Gedaan te {props.data.place} op {props.data.date} in 2 originele
-              exemplaren waarvan elke partij erkent een ondertekend exemplaar te
-              hebben ontvangen.
+              Gedaan te Gent op {props.data.date} in 2 originele exemplaren
+              waarvan elke partij erkent een ondertekend exemplaar te hebben
+              ontvangen.
             </p>
             <div className="end-signatures">
               <div>
